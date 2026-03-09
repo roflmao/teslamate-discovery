@@ -179,6 +179,15 @@ func (m *MQTT) PublishDiscovery(ctx context.Context, id string, device ha.Device
 
 		// Location
 		ha.Sensor{
+			Device:              device,
+			Icon:                "mdi:navigation",
+			Name:                "Active Route",
+			JSONAttributesTopic: StateTopic(device, "/active_route"),
+			StateTopic:          StateTopic(device, "/active_route"),
+			UniqueId:            UniqueId(device, "/active_route"),
+			ValueTemplate:       `{{ value_json.destination | default('None') }}`,
+		},
+		ha.Sensor{
 			Device:     device,
 			Icon:       "mdi:map-marker",
 			Name:       "Active Route Destination",

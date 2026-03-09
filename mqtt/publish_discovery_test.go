@@ -71,6 +71,7 @@ func TestMQTT_PublishDiscovery(t *testing.T) {
 				"test-discovery-prefix/binary_sensor/test-id/preconditioning/config",
 				"test-discovery-prefix/sensor/test-id/outside_temp/config",
 				"test-discovery-prefix/sensor/test-id/climate_keeper_mode/config",
+				"test-discovery-prefix/sensor/test-id/active_route/config",
 				"test-discovery-prefix/sensor/test-id/active_route_destination/config",
 				"test-discovery-prefix/sensor/test-id/active_route_latitude/config",
 				"test-discovery-prefix/sensor/test-id/active_route_longitude/config",

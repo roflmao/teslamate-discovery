@@ -115,6 +115,7 @@ All entities are grouped under a single Home Assistant device per vehicle. Entit
 
 | Entity | MQTT topic | Description | Unit |
 |--------|-----------|-------------|------|
+| `sensor.<v>_active_route` | `active_route` | Destination name as state; full route JSON (distance, ETA, energy at arrival, in-progress flag) exposed as attributes | — |
 | `sensor.<v>_active_route_destination` | `active_route_destination` | Destination name of the active navigation route | — |
 | `sensor.<v>_active_route_latitude` | `active_route_latitude` | Destination latitude of the active route | ° |
 | `sensor.<v>_active_route_longitude` | `active_route_longitude` | Destination longitude of the active route | ° |
@@ -181,14 +182,6 @@ All entities are grouped under a single Home Assistant device per vehicle. Entit
 | `binary_sensor.<v>_tire_soft_front_right` | `tpms_soft_warning_fr` | Front-right soft tyre warning | on/off |
 | `binary_sensor.<v>_tire_soft_rear_left` | `tpms_soft_warning_rl` | Rear-left soft tyre warning | on/off |
 | `binary_sensor.<v>_tire_soft_rear_right` | `tpms_soft_warning_rr` | Rear-right soft tyre warning | on/off |
-
-## Topics Published by TeslaMate but Not Discovered
-
-The following MQTT topics are published by TeslaMate but do not currently have a corresponding discovery entity:
-
-| MQTT topic | Description |
-|-----------|-------------|
-| `active_route` | JSON blob with destination, energy remaining, ETA, and miles to arrival for an active navigation route |
 
 ## License
 Apache License v2.0: see [LICENSE](./LICENSE) for details.
