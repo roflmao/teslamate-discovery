@@ -72,6 +72,8 @@ func TestMQTT_PublishDiscovery(t *testing.T) {
 				"test-discovery-prefix/sensor/test-id/elevation/config",
 				"test-discovery-prefix/sensor/test-id/geofence/config",
 				"test-discovery-prefix/sensor/test-id/heading/config",
+				"test-discovery-prefix/sensor/test-id/latitude/config",
+				"test-discovery-prefix/sensor/test-id/longitude/config",
 				"test-discovery-prefix/device_tracker/test-id/location/config",
 				"test-discovery-prefix/sensor/test-id/power/config",
 				"test-discovery-prefix/sensor/test-id/speed/config",
