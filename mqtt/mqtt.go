@@ -7,9 +7,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"strings"
 
 	paho "github.com/eclipse/paho.mqtt.golang"
-	"github.com/iancoleman/strcase"
 
 	"github.com/nebhale/teslamate-discovery/ha"
 )
@@ -132,9 +132,31 @@ func BrokerURI(config Config) string {
 }
 
 func haEntityID(domain, deviceName, entityName string) string {
-	id := domain + "." + strcase.ToSnake(deviceName)
+	id := domain + "." + slugify(deviceName)
 	if entityName != "" {
-		id += "_" + strcase.ToSnake(entityName)
+		id += "_" + slugify(entityName)
 	}
 	return id
+}
+
+// slugify mirrors Home Assistant's entity ID sanitisation: lowercase, spaces
+// and hyphens become underscores, all other non-alphanumeric characters are
+// dropped, and consecutive underscores are collapsed.
+func slugify(s string) string {
+	s = strings.ToLower(s)
+	var b strings.Builder
+	for _, r := range s {
+		switch {
+		case r >= 'a' && r <= 'z', r >= '0' && r <= '9':
+			b.WriteRune(r)
+		case r == ' ' || r == '-':
+			b.WriteRune('_')
+		}
+	}
+	// collapse consecutive underscores
+	result := b.String()
+	for strings.Contains(result, "__") {
+		result = strings.ReplaceAll(result, "__", "_")
+	}
+	return strings.Trim(result, "_")
 }
