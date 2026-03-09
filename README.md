@@ -99,6 +99,7 @@ All entities are grouped under a single Home Assistant device per vehicle. Entit
 | `sensor.<v>_charger_voltage` | `charger_voltage` | Voltage at the charger | V |
 | `sensor.<v>_scheduled_start_time` | `scheduled_charging_start_time` | When scheduled charging is set to begin (only published when set) | timestamp |
 | `sensor.<v>_time_to_charged` | `time_to_full_charge` | Estimated time until fully charged | h |
+| `sensor.<v>_charging_state` | `charging_state` | Charger state: `Disconnected`, `Charging`, `Stopped`, `Complete`, `NoPower` | — |
 
 ## Climate
 
@@ -108,11 +109,15 @@ All entities are grouped under a single Home Assistant device per vehicle. Entit
 | `binary_sensor.<v>_climate` | `is_climate_on` | Whether climate control is running | on/off |
 | `binary_sensor.<v>_preconditioning` | `is_preconditioning` | Whether the car is preconditioning | on/off |
 | `sensor.<v>_outside_temp` | `outside_temp` | Outside air temperature | °C |
+| `sensor.<v>_climate_keeper_mode` | `climate_keeper_mode` | Active climate keeper mode: `off`, `dog`, `camp`, `keep` | — |
 
 ## Location
 
 | Entity | MQTT topic | Description | Unit |
 |--------|-----------|-------------|------|
+| `sensor.<v>_active_route_destination` | `active_route_destination` | Destination name of the active navigation route | — |
+| `sensor.<v>_active_route_latitude` | `active_route_latitude` | Destination latitude of the active route | ° |
+| `sensor.<v>_active_route_longitude` | `active_route_longitude` | Destination longitude of the active route | ° |
 | `sensor.<v>_elevation` | `elevation` | Current altitude | m or ft (units-distance) |
 | `sensor.<v>_geofence` | `geofence` | Name of the active TeslaMate geofence, if any | — |
 | `sensor.<v>_heading` | `heading` | Compass bearing the car is pointing | ° |
@@ -129,6 +134,7 @@ All entities are grouped under a single Home Assistant device per vehicle. Entit
 | `sensor.<v>_display_name` | `display_name` | Vehicle name as set in the Tesla app | — |
 | `sensor.<v>_exterior_color` | `exterior_color` | Paint colour code | — |
 | `sensor.<v>_spoiler_type` | `spoiler_type` | Spoiler type | — |
+| `sensor.<v>_wheel_type` | `wheel_type` | Wheel/tyre package code (e.g. `Pinwheel18CapKit`, `Crossflow19`) | — |
 | `sensor.<v>_state` | `state` | Car state: `online`, `offline`, `asleep`, `charging`, `driving`, etc. | — |
 | `sensor.<v>_last_seen` | `since` | Timestamp of the last state change | timestamp |
 | `sensor.<v>_shift_state` | `shift_state` | Gear selector position: `P`, `D`, `R`, `N` | — |
@@ -183,12 +189,6 @@ The following MQTT topics are published by TeslaMate but do not currently have a
 | MQTT topic | Description |
 |-----------|-------------|
 | `active_route` | JSON blob with destination, energy remaining, ETA, and miles to arrival for an active navigation route |
-| `active_route_destination` | Plain-text destination name of the active route |
-| `active_route_latitude` | Destination latitude of the active route |
-| `active_route_longitude` | Destination longitude of the active route |
-| `charging_state` | Charger state string: `Disconnected`, `Charging`, `Stopped`, `Complete`, `NoPower` |
-| `climate_keeper_mode` | Active climate keeper: `off`, `dog`, `camp`, `keep` |
-| `wheel_type` | Wheel/tyre package code (e.g. `Pinwheel18CapKit`, `Crossflow19`) |
 
 ## License
 Apache License v2.0: see [LICENSE](./LICENSE) for details.

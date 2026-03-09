@@ -120,6 +120,13 @@ func (m *MQTT) PublishDiscovery(ctx context.Context, id string, device ha.Device
 			UniqueId:          UniqueId(device, "/time_to_charged"),
 			UnitOfMeasurement: "h",
 		},
+		ha.Sensor{
+			Device:     device,
+			Icon:       "mdi:ev-station",
+			Name:       "Charging State",
+			StateTopic: StateTopic(device, "/charging_state"),
+			UniqueId:   UniqueId(device, "/charging_state"),
+		},
 
 		// Climate
 		ha.Sensor{
@@ -162,8 +169,38 @@ func (m *MQTT) PublishDiscovery(ctx context.Context, id string, device ha.Device
 			UnitOfMeasurement: "°C",
 			ValueTemplate:     units.RoundingValueTemplate,
 		},
+		ha.Sensor{
+			Device:     device,
+			Icon:       "mdi:weather-partly-cloudy",
+			Name:       "Climate Keeper Mode",
+			StateTopic: StateTopic(device, "/climate_keeper_mode"),
+			UniqueId:   UniqueId(device, "/climate_keeper_mode"),
+		},
 
 		// Location
+		ha.Sensor{
+			Device:     device,
+			Icon:       "mdi:map-marker",
+			Name:       "Active Route Destination",
+			StateTopic: StateTopic(device, "/active_route_destination"),
+			UniqueId:   UniqueId(device, "/active_route_destination"),
+		},
+		ha.Sensor{
+			Device:            device,
+			Icon:              "mdi:latitude",
+			Name:              "Active Route Latitude",
+			StateTopic:        StateTopic(device, "/active_route_latitude"),
+			UniqueId:          UniqueId(device, "/active_route_latitude"),
+			UnitOfMeasurement: "°",
+		},
+		ha.Sensor{
+			Device:            device,
+			Icon:              "mdi:longitude",
+			Name:              "Active Route Longitude",
+			StateTopic:        StateTopic(device, "/active_route_longitude"),
+			UniqueId:          UniqueId(device, "/active_route_longitude"),
+			UnitOfMeasurement: "°",
+		},
 		ha.Sensor{
 			Device:            device,
 			Icon:              "mdi:image-filter-hdr",
@@ -248,6 +285,13 @@ func (m *MQTT) PublishDiscovery(ctx context.Context, id string, device ha.Device
 			Name:       "Spoiler Type",
 			StateTopic: StateTopic(device, "/spoiler_type"),
 			UniqueId:   UniqueId(device, "/spoiler_type"),
+		},
+		ha.Sensor{
+			Device:     device,
+			Icon:       "mdi:tire",
+			Name:       "Wheel Type",
+			StateTopic: StateTopic(device, "/wheel_type"),
+			UniqueId:   UniqueId(device, "/wheel_type"),
 		},
 		ha.Sensor{
 			Device:     device,
