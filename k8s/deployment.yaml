@@ -21,7 +21,9 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: teslamate-discovery
-              image: ghcr.io/roflmao/teslamate-discovery:main
+              # Replace with the image produced by .github/workflows/docker.yml:
+              # ghcr.io/<your-github-org>/teslamate-discovery:main
+              image: ghcr.io/OWNER/teslamate-discovery:main
               imagePullPolicy: Always
               env:
                 - name: MQTT_SCHEME
