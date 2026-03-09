@@ -9,6 +9,7 @@ import (
 	"fmt"
 
 	paho "github.com/eclipse/paho.mqtt.golang"
+	"github.com/iancoleman/strcase"
 
 	"github.com/nebhale/teslamate-discovery/ha"
 )
@@ -55,19 +56,23 @@ func NewMQTT(ctx context.Context, config Config) (*MQTT, error) {
 func (m *MQTT) Publish(ctx context.Context, discoveryPrefix string, v ...interface{}) error {
 	for _, v := range v {
 		var topic string
+		var entityID string
 
 		switch v := v.(type) {
 		case ha.BinarySensor:
 			topic = fmt.Sprintf("%s/binary_sensor/%s/config", discoveryPrefix, v.UniqueId)
+			entityID = haEntityID("binary_sensor", v.Device.Name, v.Name)
 		case ha.DeviceTracker:
 			topic = fmt.Sprintf("%s/device_tracker/%s/config", discoveryPrefix, v.UniqueId)
+			entityID = haEntityID("device_tracker", v.Device.Name, v.Name)
 		case ha.Sensor:
 			topic = fmt.Sprintf("%s/sensor/%s/config", discoveryPrefix, v.UniqueId)
+			entityID = haEntityID("sensor", v.Device.Name, v.Name)
 		default:
 			return fmt.Errorf("unexpected message type: %T", v)
 		}
 
-		fmt.Printf("  %s\n", topic)
+		fmt.Printf("  %s\n", entityID)
 
 		payload, err := json.Marshal(v)
 		if err != nil {
@@ -124,4 +129,12 @@ func (m *MQTT) Unsubscribe(ctx context.Context, topic string) error {
 
 func BrokerURI(config Config) string {
 	return fmt.Sprintf("%s://%s:%d", config.Scheme, config.Host, config.Port)
+}
+
+func haEntityID(domain, deviceName, entityName string) string {
+	id := domain + "." + strcase.ToSnake(deviceName)
+	if entityName != "" {
+		id += "_" + strcase.ToSnake(entityName)
+	}
+	return id
 }
