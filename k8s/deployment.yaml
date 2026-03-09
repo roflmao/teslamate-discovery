@@ -42,3 +42,9 @@ spec:
                     secretKeyRef:
                       name: teslamate-discovery
                       key: MQTT_PASSWORD
+                - name: UNITS_DISTANCE
+                  value: "metric"   # "metric" or "imperial"
+                - name: UNITS_PRESSURE
+                  value: "metric"   # "metric" or "imperial"
+                - name: UNITS_RANGE_TYPE
+                  value: "rated"    # "rated", "ideal", or "estimated"
