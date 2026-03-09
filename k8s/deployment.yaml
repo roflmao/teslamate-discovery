@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: teslamate-discovery
+  namespace: default
+stringData:
+  MQTT_USERNAME: "changeme"
+  MQTT_PASSWORD: "changeme"
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: teslamate-discovery
+  namespace: default
+spec:
+  schedule: "0 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: teslamate-discovery
+              # Replace with the image produced by .github/workflows/docker.yml:
+              # ghcr.io/<your-github-org>/teslamate-discovery:main
+              image: ghcr.io/OWNER/teslamate-discovery:main
+              imagePullPolicy: Always
+              env:
+                - name: MQTT_SCHEME
+                  value: "tcp"
+                - name: MQTT_HOST
+                  value: "mosquitto"
+                - name: MQTT_PORT
+                  value: "1883"
+                - name: MQTT_USERNAME
+                  valueFrom:
+                    secretKeyRef:
+                      name: teslamate-discovery
+                      key: MQTT_USERNAME
+                - name: MQTT_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: teslamate-discovery
+                      key: MQTT_PASSWORD
