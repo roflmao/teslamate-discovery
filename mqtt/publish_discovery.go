@@ -17,7 +17,7 @@ import (
 func (m *MQTT) PublishDiscovery(ctx context.Context, id string, device ha.Device, haCfg ha.Config,
 	unitsCfg units.Config) error {
 
-	fmt.Printf("Configuring %s\n", device.Name)
+	fmt.Printf("Configuring %s (vehicle %s)\n", device.Name, id)
 
 	v := []interface{}{
 
